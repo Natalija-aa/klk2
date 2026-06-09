@@ -138,4 +138,10 @@ public partial class MainWindow : Window
         var detalji = new DetaljiWindow(selektovani.Id) { Owner = this };
         detalji.ShowDialog();
     }
+
+    private void btnAviokompanije_Click(object sender, RoutedEventArgs e)
+    {
+        var prozor = new AviokompanijaWindow { Owner = this };
+        prozor.ShowDialog();
+    }
 }

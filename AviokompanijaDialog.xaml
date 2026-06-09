@@ -1,8 +1,8 @@
-<Window x:Class="klk2.LetDialog"
+<Window x:Class="klk2.AviokompanijaDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Let" Height="420" Width="440"
+        Title="Aviokompanija" Height="280" Width="380"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         Background="#F5F5F5"
@@ -26,14 +26,12 @@
     </Window.Resources>
 
     <DockPanel>
-        <!-- Header -->
         <Border DockPanel.Dock="Top" Background="#1A237E" Height="50" Padding="20,0">
-            <TextBlock x:Name="tbNaslov" Text="Novi Let"
+            <TextBlock x:Name="tbNaslov" Text="Nova Aviokompanija"
                        FontSize="18" FontWeight="Bold" Foreground="White"
                        VerticalAlignment="Center"/>
         </Border>
 
-        <!-- Buttons -->
         <Border DockPanel.Dock="Bottom" Background="White" Height="56"
                 BorderBrush="#E0E0E0" BorderThickness="0,1,0,0" Padding="15,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -52,35 +50,12 @@
             </StackPanel>
         </Border>
 
-        <!-- Form -->
-        <ScrollViewer Padding="20" VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                <TextBlock Text="Aviokompanija" Style="{StaticResource LabelStyle}"/>
-                <ComboBox x:Name="cbAviokompanija" Height="34" FontSize="13"
-                          DisplayMemberPath="Naziv" SelectedValuePath="Id"
-                          Margin="0,0,0,12" Padding="8,0"
-                          BorderBrush="#BDBDBD"/>
+        <StackPanel Margin="20">
+            <TextBlock Text="Naziv" Style="{StaticResource LabelStyle}"/>
+            <TextBox x:Name="tbNaziv" Style="{StaticResource InputStyle}" Margin="0,0,0,12"/>
 
-                <TextBlock Text="Broj Leta" Style="{StaticResource LabelStyle}"/>
-                <TextBox x:Name="tbBrojLeta" Style="{StaticResource InputStyle}" Margin="0,0,0,12"/>
-
-                <TextBlock Text="Relacija" Style="{StaticResource LabelStyle}"/>
-                <TextBox x:Name="tbRelacija" Style="{StaticResource InputStyle}" Margin="0,0,0,12"/>
-
-                <TextBlock Text="Datum i Vreme" Style="{StaticResource LabelStyle}"/>
-                <Grid Margin="0,0,0,12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="8"/>
-                        <ColumnDefinition Width="110"/>
-                    </Grid.ColumnDefinitions>
-                    <DatePicker x:Name="dpDatum" Grid.Column="0" Height="34" FontSize="13" BorderBrush="#BDBDBD"/>
-                    <materialDesign:TimePicker x:Name="tpVreme" Grid.Column="2" Is24Hours="True" FontSize="13"/>
-                </Grid>
-
-                <TextBlock Text="Cena Karte (EUR)" Style="{StaticResource LabelStyle}"/>
-                <TextBox x:Name="tbCena" Style="{StaticResource InputStyle}" Margin="0,0,0,4"/>
-            </StackPanel>
-        </ScrollViewer>
+            <TextBlock Text="Država" Style="{StaticResource LabelStyle}"/>
+            <TextBox x:Name="tbDrzava" Style="{StaticResource InputStyle}"/>
+        </StackPanel>
     </DockPanel>
 </Window>

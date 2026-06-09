@@ -48,7 +48,8 @@ public partial class LetDialog : Window
             cbAviokompanija.SelectedValue = let.AviokompanijaId;
             tbBrojLeta.Text = let.BrojLeta;
             tbRelacija.Text = let.Relacija;
-            dpDatum.SelectedDate = let.DatumVreme;
+            dpDatum.SelectedDate = let.DatumVreme.Date;
+            tpVreme.SelectedTime = DateTime.Today.Add(let.DatumVreme.TimeOfDay);
             tbCena.Text = let.CenaKarte.ToString("N2");
         }
         catch (Exception ex)
@@ -86,6 +87,12 @@ public partial class LetDialog : Window
                 MessageBoxButton.OK, MessageBoxImage.Warning);
             return false;
         }
+        if (tpVreme.SelectedTime == null)
+        {
+            MessageBox.Show("Molimo unesite vreme leta.", "Validacija",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+            return false;
+        }
         if (!decimal.TryParse(tbCena.Text.Replace(',', '.'),
                 System.Globalization.NumberStyles.Any,
                 System.Globalization.CultureInfo.InvariantCulture,
@@ -108,6 +115,8 @@ public partial class LetDialog : Window
             System.Globalization.CultureInfo.InvariantCulture,
             out decimal cena);
 
+        var datumVreme = dpDatum.SelectedDate!.Value.Date.Add(tpVreme.SelectedTime!.Value.TimeOfDay);
+
         try
         {
             using var ctx = new AvioContext();
@@ -120,7 +129,7 @@ public partial class LetDialog : Window
                     let.AviokompanijaId = (int)cbAviokompanija.SelectedValue;
                     let.BrojLeta = tbBrojLeta.Text.Trim();
                     let.Relacija = tbRelacija.Text.Trim();
-                    let.DatumVreme = dpDatum.SelectedDate!.Value;
+                    let.DatumVreme = datumVreme;
                     let.CenaKarte = cena;
                 }
                 ctx.SaveChanges();
@@ -133,7 +142,7 @@ public partial class LetDialog : Window
                     AviokompanijaId = (int)cbAviokompanija.SelectedValue,
                     BrojLeta = tbBrojLeta.Text.Trim(),
                     Relacija = tbRelacija.Text.Trim(),
-                    DatumVreme = dpDatum.SelectedDate!.Value,
+                    DatumVreme = datumVreme,
                     CenaKarte = cena
                 };
                 ctx.Letovi.Add(let);
