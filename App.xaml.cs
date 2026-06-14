@@ -1,25 +1,28 @@
 using System.Windows;
 using System.Windows.Media;
-using klk2.Data;
-using klk2.Models;
+using klk2.Data;    // AvioContext - most ka bayi
+using klk2.Models;  // Let i Aviokompanija
 using MaterialDesignThemes.Wpf;
 
 namespace klk2;
 
 public partial class App : Application
 {
+    // pokrece se prije prozora
     protected void OnStartup(object sender, StartupEventArgs e)
     {
+        // boje
         var paletteHelper = new PaletteHelper();
         var theme = paletteHelper.GetTheme();
         theme.SetPrimaryColor(Color.FromRgb(0x1A, 0x23, 0x7E));
         theme.SetSecondaryColor(Color.FromRgb(0x15, 0x65, 0xC0));
         paletteHelper.SetTheme(theme);
 
-        using var context = new AvioContext();
-        context.Database.EnsureCreated();
+        using var context = new AvioContext();  // sama se zatvori kad se zavrsi metoda
+        context.Database.EnsureCreated();   // ako ne postoji napravi bazu
 
-        if (!context.Aviokompanije.Any())
+
+        if (!context.Aviokompanije.Any())   // ako je baza prazna postavi pocetne podatke
         {
             var air = new Aviokompanija { Naziv = "Air Serbia",       Drzava = "Srbija"  };
             var luf = new Aviokompanija { Naziv = "Lufthansa",        Drzava = "Nemacka" };
@@ -37,7 +40,7 @@ public partial class App : Application
             context.SaveChanges();
         }
 
-        var mainWindow = new MainWindow();
+        var mainWindow = new MainWindow();  // glavni prozor
         mainWindow.Show();
     }
 }

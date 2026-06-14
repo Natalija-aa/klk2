@@ -6,23 +6,24 @@ namespace klk2;
 
 public partial class LetDialog : Window
 {
-    private readonly int? _letId;
+    private readonly int? _letId;   // izmjena, dodavanje
 
-    public int? SavedLetId { get; private set; }
+    public int? SavedLetId { get; private set; }    // id leta koji je forma sacuvala
 
     public LetDialog(int? letId = null)
     {
-        InitializeComponent();
+        InitializeComponent();  // izgled forme
         _letId = letId;
-        UcitajAviokompanije();
+        UcitajAviokompanije();  // padajuca lista / aviokompanije
 
-        if (letId.HasValue)
+        if (letId.HasValue) // da li ima vrijednost - iymjena
         {
             tbNaslov.Text = "Izmeni Let";
             PopuniFormu(letId.Value);
         }
     }
 
+    // padajuca lista
     private void UcitajAviokompanije()
     {
         try
@@ -37,14 +38,16 @@ public partial class LetDialog : Window
         }
     }
 
+    // ya iymjenu
     private void PopuniFormu(int id)
     {
         try
         {
             using var ctx = new AvioContext();
-            var let = ctx.Letovi.Find(id);
+            var let = ctx.Letovi.Find(id);  // let po id
             if (let == null) return;
 
+            // popunjavanje vrijednosti
             cbAviokompanija.SelectedValue = let.AviokompanijaId;
             tbBrojLeta.Text = let.BrojLeta;
             tbRelacija.Text = let.Relacija;
@@ -59,6 +62,7 @@ public partial class LetDialog : Window
         }
     }
 
+    // da li je unos tacan i dobar
     private bool Validiraj()
     {
         if (cbAviokompanija.SelectedItem == null)
@@ -106,10 +110,12 @@ public partial class LetDialog : Window
         return true;
     }
 
+    // Sacuvaj
     private void btnSacuvaj_Click(object sender, RoutedEventArgs e)
     {
         if (!Validiraj()) return;
 
+        // cijena
         decimal.TryParse(tbCena.Text.Replace(',', '.'),
             System.Globalization.NumberStyles.Any,
             System.Globalization.CultureInfo.InvariantCulture,
@@ -121,6 +127,7 @@ public partial class LetDialog : Window
         {
             using var ctx = new AvioContext();
 
+            // izmjena i dodavanje
             if (_letId.HasValue)
             {
                 var let = ctx.Letovi.Find(_letId.Value);

@@ -22,6 +22,7 @@ public partial class AviokompanijaDialog : Window
         }
     }
 
+    // popunjeno vrijednostima iy baza
     private void PopuniFormu(int id)
     {
         try
@@ -40,6 +41,7 @@ public partial class AviokompanijaDialog : Window
         }
     }
 
+    // da li su popunjena sva polja
     private bool Validiraj()
     {
         if (string.IsNullOrWhiteSpace(tbNaziv.Text))
@@ -59,6 +61,7 @@ public partial class AviokompanijaDialog : Window
         return true;
     }
 
+    // cuvanje u bazi
     private void btnSacuvaj_Click(object sender, RoutedEventArgs e)
     {
         if (!Validiraj()) return;
@@ -66,7 +69,7 @@ public partial class AviokompanijaDialog : Window
         try
         {
             using var ctx = new AvioContext();
-
+            // iymjena pa dodavanje
             if (_aviokompanijaId.HasValue)
             {
                 var a = ctx.Aviokompanije.Find(_aviokompanijaId.Value);
@@ -80,6 +83,16 @@ public partial class AviokompanijaDialog : Window
             }
             else
             {
+                // provera da li vec postoji kompanija sa istim nazivom
+                string naziv = tbNaziv.Text.Trim();
+                bool postoji = ctx.Aviokompanije.Any(a => a.Naziv == naziv);
+                if (postoji)
+                {
+                    MessageBox.Show("Kompanija sa tim nazivom već postoji.", "Validacija",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;   // prekini - ne cuvaj duplikat
+                }
+
                 var a = new Aviokompanija
                 {
                     Naziv = tbNaziv.Text.Trim(),
@@ -99,6 +112,7 @@ public partial class AviokompanijaDialog : Window
         }
     }
 
+    // otkazi
     private void btnOtkazi_Click(object sender, RoutedEventArgs e)
     {
         DialogResult = false;

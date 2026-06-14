@@ -8,8 +8,8 @@ public partial class DetaljiWindow : Window
 {
     public DetaljiWindow(int letId)
     {
-        InitializeComponent();
-        UcitajDetalje(letId);
+        InitializeComponent();  // izgled
+        UcitajDetalje(letId);   // podaci
     }
 
     private void UcitajDetalje(int letId)

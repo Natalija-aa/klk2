@@ -21,9 +21,9 @@ public partial class AviokompanijaWindow : Window
         try
         {
             using var ctx = new AvioContext();
-            var lista = ctx.Aviokompanije.ToList();
+            var lista = ctx.Aviokompanije.ToList(); // kompanije iy baye u listu
             Aviokompanije.Clear();
-            foreach (var a in lista)
+            foreach (var a in lista)    // dodaj
                 Aviokompanije.Add(a);
         }
         catch (Exception ex)
