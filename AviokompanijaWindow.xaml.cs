@@ -84,7 +84,7 @@ public partial class AviokompanijaWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Greška pri brisanju:\n{ex.Message}\n\nProvjerite da li ova aviokompanija ima povezane letove.", "Greška",
+            MessageBox.Show($"Greška pri brisanju aviokompanijeː\n{ex.Message}", "Greška",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
